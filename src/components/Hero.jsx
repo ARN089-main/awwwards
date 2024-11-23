@@ -25,7 +25,13 @@ const Hero = () => {
         setCurrentIndex(upcomingVideoIndex);
     }
 
-    useGSAP
+    useGSAP(() => {
+        if(hasClicked) {
+            gsap.set('#next-video', { visibility: 'visible' });
+
+            gsap
+        }
+    }, {dependencies: [currentIndex], revertOnUpdate: true})
 
     const getVideoSrc = (index) => `videos/hero-${index}.mp4`;
   return (
