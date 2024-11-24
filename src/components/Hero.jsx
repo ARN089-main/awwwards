@@ -1,17 +1,18 @@
-import { useRef } from 'react';
-import { useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Button from './Button';
 import { TiLocationArrow } from 'react-icons/ti';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/all';
 
+gsap.registerPlugin(ScrollTrigger)
 const Hero = () => {
     const [currentIndex, setCurrentIndex] = useState(1);
     const [hasClicked, setHasClicked] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [loadedVideos, setLoadedVideos] = useState(0);
 
-    const totalVideos = 3;
+    const totalVideos = 4;
     const nextVideoRef = useRef(null);
 
     const handleVideoLoad = () => {
@@ -25,6 +26,13 @@ const Hero = () => {
 
         setCurrentIndex(upcomingVideoIndex);
     }
+
+    useEffect(() => {
+        if(loadedVideos === totalVideos - 1) {
+            setIsLoading(false);
+        }
+    }, [loadedVideos])
+
 
     useGSAP(() => {
         if(hasClicked) {
@@ -51,8 +59,8 @@ const Hero = () => {
 
     useGSAP(() => {
         gsap.set('#video-frame', {
-            clipPath: 'polygon(8% 7%, 53% 0, 90% 91%, 0% 100%)', // love to change the clip path
-            borderRadius: '0 0 40% 10%'
+            clipPath: 'polygon(8% 7%, 53% 0, 90% 85%, 0% 100%)', // love to change the clip path
+            borderRadius: '0 0 55% 20%'
         })
 
         gsap.from('#video-frame', {
@@ -71,7 +79,16 @@ const Hero = () => {
     const getVideoSrc = (index) => `videos/hero-${index}.mp4`;
   return (
     <div className="relative h-dvh w-screen overflow-x-hidden">
-        <div id="video-frame" className="relative z-10 h-dvh w-screen overflow-hidden rounded-lg bg-blue-75">
+
+        {isLoading && (
+            <div className="flex-center absolute z-[100] h-dvh w-screen overflow-hidden bg-violet-50">
+                <div className="three-body">
+                    <div className="three-body__dot" />
+                    <div className="three-body__dot" />
+                    <div className="three-body__dot" />
+                </div>
+            </div>
+        )}        <div id="video-frame" className="relative z-10 h-dvh w-screen overflow-hidden rounded-lg bg-blue-75">
             <div>
                 <div className="mask-clip-path absolute-center absolute z-50 size-64 cursor-pointer overflow-hidden rounded-lg">
                     <div onClick={handleMiniVdClick} className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100">
