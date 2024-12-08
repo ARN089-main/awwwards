@@ -1,4 +1,4 @@
-video link: [text](https://youtu.be/zA9r5zTllx4?t=4836)
+video link: [reference video](https://youtu.be/zA9r5zTllx4?t=5563)
 
 git status <br>
 git add . <br>
